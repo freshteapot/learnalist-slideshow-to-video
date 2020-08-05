@@ -27,7 +27,6 @@ async function buildSlideshow(opt, slideshow) {
     fs.rmdirSync(directory, { recursive: true });
     fs.mkdirSync(directory, { recursive: true });
 
-
     const baseURL = slideshow.server ? slideshow.server : opt.server;
     const url = `${baseURL}/alist/${slideshow.uuid}.html#/play/slideshow`;
     const browser = await puppeteer.launch();
@@ -59,7 +58,6 @@ async function buildSlideshow(opt, slideshow) {
             throw 'Duration is not set';
         }
         slideshow.durations = Array.from({ length: aList.data.length }).fill(slideshow.durations[0], 0);
-        console.log(slideshow);
     }
 
 

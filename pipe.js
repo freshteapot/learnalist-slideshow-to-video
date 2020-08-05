@@ -33,7 +33,8 @@ stdin.on('end', async function () {
 ${directory}/output.mp4`
 
         await execShellCommand(buildVideoCMD);
-        console.log(`Your video location is ${directory}/output.mp4`);
+        console.log("Your video location is:")
+        console.log(`open ${directory}/output.mp4`);
         console.log("finished");
         exit(0);
     } catch (e) {
