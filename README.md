@@ -1,4 +1,4 @@
-# Example that stitches the iamges together and adds time.
+# Example that stitches images together and then makes a movie based on durations
 
 ```sh
 ffmpeg -y \
