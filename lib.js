@@ -26,9 +26,20 @@ async function buildSlideshow(opt, slideshow) {
     const directory = `${opt.dir}/${slideshow.uuid}`;
     fs.rmdirSync(directory, { recursive: true });
     fs.mkdirSync(directory, { recursive: true });
+    // If we wanted it to work on non-public pages
+    // slideshow toolbox
+    //  we record the required js in manifest_js
+    //  we can bootstrap the slideshow with the data from the list
 
+    // Only works on public pages
     const baseURL = slideshow.server ? slideshow.server : opt.server;
     const url = `${baseURL}/alist/${slideshow.uuid}.html#/play/slideshow`;
+
+    // Maybe I want to emulate iphone
+    // https://pptr.dev/#?product=Puppeteer&version=v8.0.0&show=api-pageemulateoptions
+    // https://pptr.dev/#?product=Puppeteer&version=v8.0.0&show=api-puppeteerlaunchoptions
+    // defaultViewport
+    // https://stackoverflow.com/questions/57368020/how-to-use-puppeteer-to-turn-chromium-on-in-mobile-debug-mode
     const browser = await puppeteer.launch();
 
     const page = await browser.newPage();

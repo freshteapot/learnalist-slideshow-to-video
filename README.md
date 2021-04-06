@@ -1,5 +1,12 @@
 # Example that stitches images together and then makes a movie based on durations
 
+# Prerequisite
+- Install ffmpeg
+
+```sh
+brew install ffmpeg
+```
+
 ```sh
 ffmpeg -y \
 -i in.ffconcat \
@@ -14,7 +21,7 @@ echo '{
     "uuid": "3e317b11-eebc-5cbc-8211-2047f47839da",
     "durations": ["600ms", "1000ms", "600ms", "600ms", "600ms", "600ms", "600ms"],
     "all": false
-}' | jq -c | node --experimental-modules pipe.js
+}' | jq -c | node pipe.js
 ```
 
 # 1 duration for all
@@ -25,5 +32,5 @@ echo '{
     "uuid": "3e317b11-eebc-5cbc-8211-2047f47839da",
     "durations": ["3s"],
     "all": true
-}' | jq -c | node --experimental-modules pipe.js
+}' | jq -c | node pipe.js
 ```
