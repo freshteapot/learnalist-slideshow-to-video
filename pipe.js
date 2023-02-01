@@ -1,10 +1,15 @@
 'use strict';
-import { buildSlideshow, execShellCommand } from './lib.js';
+//import { buildSlideshow, execShellCommand } from './lib-puppeteer.js';
+import { buildSlideshow, execShellCommand } from './lib-playwright.js';
 import { exit } from 'process';
 
 const opts = {
     dir: "./data",
-    server: "https://learnalist.net"
+    server: "https://learnalist.net",
+    auth: {
+        username: process.env.LAL_USERNAME ?? '',
+        password: process.env.LAL_PASSWORD ?? ''
+    }
 }
 
 process.stdin.resume();
@@ -33,13 +38,27 @@ stdin.on('end', async function () {
 ${directory}/output.mp4`
 
         await execShellCommand(buildVideoCMD);
-        console.log("Your video location is:")
-        console.log(`open ${directory}/output.mp4`);
-        console.log("finished");
+        // TODO will fail without convert
+        console.log("building the pdf");
+        const buildPdfCMD = `convert ${directory}/*.png ${directory}/${slideshow.uuid}.pdf`
+        await execShellCommand(buildPdfCMD);
+        console.log(`
+
+Your video is ready ✨
+
+# Open video
+open ${directory}/output.mp4
+
+# Open pdf
+open ${directory}/${slideshow.uuid}.pdf
+
+
+finished
+
+`);
         exit(0);
     } catch (e) {
         console.log("Somehting went wrong", e);
         exit(1);
     }
 });
-

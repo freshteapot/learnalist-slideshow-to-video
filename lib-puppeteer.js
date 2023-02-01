@@ -4,7 +4,7 @@ import fs from 'fs';
 import { exec } from 'child_process';
 
 
-async function formatFfmpegDuration(durations) {
+export const formatFfmpegDuration = async (durations) => {
     const files = durations.map((duration, index) => {
         const output = `file ${index}.png
 duration ${duration}`;
@@ -14,7 +14,7 @@ duration ${duration}`;
     return ["ffconcat version 1.0", ...files].join('\n');
 }
 
-async function waitAndclickNext(page) {
+export const waitAndclickNext = async (page) => {
     await page.waitForSelector("#play-screen button");
     await page.$$eval("#play-screen button", els => {
         const next = els.find(el => el.innerText == "Next");
@@ -22,8 +22,9 @@ async function waitAndclickNext(page) {
     });
 }
 
-async function buildSlideshow(opt, slideshow) {
+export const buildSlideshow = async (opt, slideshow) => {
     const directory = `${opt.dir}/${slideshow.uuid}`;
+    fs.rm(directory, { recursive: true, force: true })
     fs.rmdirSync(directory, { recursive: true });
     fs.mkdirSync(directory, { recursive: true });
     // If we wanted it to work on non-public pages
@@ -88,7 +89,7 @@ async function buildSlideshow(opt, slideshow) {
     await browser.close();
 }
 
-function execShellCommand(cmd) {
+export const execShellCommand = (cmd) => {
     return new Promise((resolve, reject) => {
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
@@ -97,11 +98,4 @@ function execShellCommand(cmd) {
             resolve(stdout ? stdout : stderr);
         });
     });
-}
-
-export {
-    formatFfmpegDuration,
-    waitAndclickNext,
-    buildSlideshow,
-    execShellCommand
 }
