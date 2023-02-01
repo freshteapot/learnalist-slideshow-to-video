@@ -2,6 +2,8 @@
 
 # Prerequisite
 - Install ffmpeg
+- Install imagemagick (convert)
+- Install Node (runs on 19.5) etc
 
 ```sh
 brew install ffmpeg
