@@ -1,0 +1,27 @@
+FROM zenika/alpine-chrome:with-node
+
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+USER root
+
+RUN apk add --no-cache ffmpeg
+RUN apk add --no-cache imagemagick
+
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ARG TZ=UTC
+#RUN rm -rf /ms-playwright/firefox-1372
+
+WORKDIR /app
+
+#RUN npm install -g pnpm \
+#    && chown -R pwuser:pwuser /app
+#
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+
+COPY lib-playwright.js .
+COPY pipe.js .
+
+ENTRYPOINT ["node", "pipe.js"]

@@ -5,8 +5,7 @@
   "description": "Example that stitches images together and then makes a movie based on durations",
   "main": "pipe.js",
   "dependencies": {
-    "playwright": "^1.30.0",
-    "puppeteer": "^8.0.0"
+    "playwright": "^1.30.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.30.0"

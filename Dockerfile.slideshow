@@ -1,0 +1,7 @@
+FROM learnalist-slideshow-to-video-base
+
+
+WORKDIR /app
+COPY --from=learnalist /app/bin/learnalist-cli /app/bin/learnalist-cli
+ENTRYPOINT ["/app/bin/learnalist-cli"]
+EXPOSE 8000
