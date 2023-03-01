@@ -1,5 +1,5 @@
 'use strict';
-import { makePdf, makeVideo, getJSONOutput, getOutput, HttpException, login, setup, downloadAssets, buildVideoAssets, } from './lib-playwright.js';
+import { makePdf, makeVideo, HttpException, login, setup, downloadAssets, buildVideoAssets, } from './lib-playwright.js';
 import { exit } from 'process';
 
 const opts = {
@@ -9,14 +9,21 @@ const opts = {
         username: process.env.LAL_USERNAME ?? '', // TODO Do I want this still?
         password: process.env.LAL_PASSWORD ?? '',
         token: '',
-        userUuid: '',
+        user_uuid: '',
     },
+    slideshow_uuid: "",
     debug: false,
-    uuid: "", // TODO change to alistUuid
-    config: {
-        kind: "video",
-        duration: [],
-    }
+    config: {},
+    //config: {
+    //    alist_uuid: "",
+    //    kind: "video",
+    //    duration: [],
+    //}
+
+    //config: {
+    //    alist_uuid: "",
+    //    kind: "pdf"
+    //}
 }
 
 
@@ -60,18 +67,20 @@ stdin.on('end', async function () {
         const slideshow = JSON.parse(data);
         opts.dir = slideshow.dir ?? opts.dir;
         opts.auth.token = slideshow.auth.token ?? opts.auth.token;
-        opts.auth.userUuid = slideshow.auth.userUuid ?? opts.auth.userUuid;
+        opts.auth.user_uuid = slideshow.auth.user_uuid ?? opts.auth.user_uuid;
         opts.debug = slideshow.debug ?? opts.debug;
         opts.server = slideshow.server ?? opts.server;
-        opts.uuid = slideshow.uuid ?? opts.uuid;
-
+        opts.slideshow_uuid = slideshow.slideshow_uuid ?? opts.slideshow_uuid;
         opts.config = slideshow.config;
+
+        //console.log("opts", opts);
+        //console.log("slideshow", slideshow);
 
         if (!opts.debug) {
             logger.disableLogger();
         }
 
-        const directory = `${opts.dir}/${opts.uuid}`;
+        const directory = `${opts.dir}/${opts.slideshow_uuid}`;
 
         const { browser, page } = await setup(opts);
 

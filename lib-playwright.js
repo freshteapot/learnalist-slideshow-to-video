@@ -66,7 +66,7 @@ export const login = async (page, opt) => {
         const resp = await page.context().request.post(`${baseURL}/api/v1/user/token/to/cookie`, {
             data: {
                 token: opt.auth.token,
-                user_uuid: opt.auth.userUuid,
+                user_uuid: opt.auth.user_uuid,
             }
         })
         // The context already gets the cookie.
@@ -85,14 +85,14 @@ export const login = async (page, opt) => {
 export const downloadAssets = async (page, opt, directory) => {
     console.log("getting json + images");
     fs.rmSync(directory, { recursive: true, force: true });
-
     fs.mkdirSync(directory, { recursive: true });
 
     const baseURL = opt.server;
-    const url = `${baseURL}/alist/${opt.uuid}.html#/play/slideshow`;
-
+    const url = `${baseURL}/alist/${opt.config.alist_uuid}.html#/play/slideshow`;
+    console.log("url", url);
     const resp = await page.goto(url);
     if (resp.status() !== 200) {
+        console.log("resp", resp.status());
         if (resp.status() === 404) {
             throw new HttpException(404, 'List not found')
         }
