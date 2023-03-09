@@ -13,6 +13,7 @@ const opts = {
     },
     slideshow_uuid: "",
     debug: false,
+    insecureHttps: false,
     config: {},
     //config: {
     //    alist_uuid: "",
@@ -69,6 +70,7 @@ stdin.on('end', async function () {
         opts.auth.token = slideshow.auth.token ?? opts.auth.token;
         opts.auth.user_uuid = slideshow.auth.user_uuid ?? opts.auth.user_uuid;
         opts.debug = slideshow.debug ?? opts.debug;
+        opts.insecureHttps = slideshow.insecureHttps ?? opts.insecureHttps;
         opts.server = slideshow.server ?? opts.server;
         opts.slideshow_uuid = slideshow.slideshow_uuid ?? opts.slideshow_uuid;
         opts.config = slideshow.config;

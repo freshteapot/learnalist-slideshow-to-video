@@ -37,11 +37,11 @@ export const setup = async (opts) => {
     const browser = await chromium.launch({
         executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
     });
-
+    // TODO why am i setting the device?
     const context = await browser.newContext(
         {
             ...devices['iPhone 12 Mini'],
-            //ignoreHTTPSErrors: true
+            ignoreHTTPSErrors: opts.insecureHttps
         },
     );
 
@@ -51,6 +51,7 @@ export const setup = async (opts) => {
 
 export const login = async (page, opt) => {
     const baseURL = opt.server;
+    // TODO should I keep this or get rid of it
     if (opt.auth.username !== '') {
         const { username, password } = opt.auth;
         await page.goto(`${baseURL}/login.html`);
